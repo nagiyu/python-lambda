@@ -1,9 +1,17 @@
-@host = http://localhost:8080/2015-03-31/functions/function/invocations
-# @host = 
+@host = 
+
+### Local
+POST http://localhost:8080/2015-03-31/functions/function/invocations
+Content-Type: application/json
+
+{
+    "body": "{\"url\": \"https://github.com/nagiyu\"}"
+}
 
 ###
 POST {{host}}
 Content-Type: application/json
 
 {
+    "url": "https://github.com/nagiyu"
 }

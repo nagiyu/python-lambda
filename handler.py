@@ -1,7 +1,25 @@
 import sys
-from app.selenium_driver import create_chrome_driver
+import json
+from app.screenshot_to_s3 import save_url_screenshot_to_s3
 
 def lambda_handler(event, context):
-    chrome = create_chrome_driver()
-    chrome.quit()
-    return 'Hello from AWS Lambda using Python' + sys.version + '!'
+    # Parse URL from event body (assume JSON)
+    body = event.get("body")
+    if body:
+        data = json.loads(body)
+        url = data.get("url")
+    else:
+        url = None
+
+    if not url:
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"error": "Missing 'url' in request body"})
+        }
+
+    s3_url = save_url_screenshot_to_s3(url)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({"s3_url": s3_url})
+    }
