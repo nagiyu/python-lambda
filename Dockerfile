@@ -4,10 +4,12 @@ RUN dnf install -y atk cups-libs gtk3 libXcomposite alsa-lib \
     libXcursor libXdamage libXext libXi libXrandr libXScrnSaver \
     libXtst pango at-spi2-atk libXt xorg-x11-server-Xvfb \
     xorg-x11-xauth dbus-glib dbus-glib-devel nss mesa-libgbm \
-    libgbm libxkbcommon libdrm
+    libgbm libxkbcommon libdrm \
+    git
 
 COPY handler.py ${LAMBDA_TASK_ROOT}
 COPY requirements.txt ${LAMBDA_TASK_ROOT}
+COPY app ${LAMBDA_TASK_ROOT}/app
 
 RUN pip install -r requirements.txt
 
